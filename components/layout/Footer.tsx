@@ -2,8 +2,297 @@
 
 import Link from "next/link"
 import { Cpu } from "lucide-react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "../ui/dialog"
+import { Button } from "@/components/ui/button"
+import { useState } from "react"
+import { serviciosDetallados } from "../home/Services"
+
+// Contenido de los modales
+const legalContent = {
+  terms: {
+    title: "Términos y condiciones del servicio",
+    content: (
+      <>
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">1. Introducción</h2>
+          <p>
+            Bienvenido a los términos y condiciones de Digital Strong Locking S.A. Al acceder y utilizar nuestros servicios 
+            de soporte técnico remoto, usted acepta estos términos en su totalidad.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">2. Descripción del servicio</h2>
+          <p>
+            Proporcionamos servicios de soporte técnico remoto que incluyen, pero no se limitan a:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Asistencia técnica remota para computadores y dispositivos</li>
+            <li>Eliminación de virus y malware</li>
+            <li>Optimización de sistemas</li>
+            <li>Configuración de software y hardware</li>
+            <li>Asesoramiento tecnológico general</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">3. Responsabilidades del cliente</h2>
+          <p>
+            Al utilizar nuestros servicios, el cliente se compromete a:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Proporcionar información precisa sobre los problemas técnicos</li>
+            <li>Mantener copias de seguridad de sus datos importantes</li>
+            <li>Cooperar con nuestros técnicos durante las sesiones de soporte</li>
+            <li>No utilizar nuestros servicios para actividades ilegales</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">4. Limitación de responsabilidad</h2>
+          <p>
+            Digital Strong Locking S.A. no se hace responsable de:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Pérdida de datos durante el servicio</li>
+            <li>Daños indirectos o consecuentes</li>
+            <li>Problemas causados por hardware defectuoso</li>
+            <li>Interrupciones del servicio por causas ajenas a nuestra voluntad</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">5. Pagos y reembolsos</h2>
+          <p>
+            Nuestras políticas de pago y reembolso establecen que:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Los pagos deben realizarse antes de iniciar el servicio</li>
+            <li>Los reembolsos se evaluarán caso por caso</li>
+            <li>No se garantizan reembolsos por servicios ya prestados</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">6. Modificaciones</h2>
+          <p>
+            Nos reservamos el derecho de modificar estos términos en cualquier momento. 
+            Los cambios entrarán en vigor inmediatamente después de su publicación en nuestro sitio web.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">7. Contacto</h2>
+          <p>
+            Para cualquier consulta sobre estos términos y condiciones, puede contactarnos en:
+            <br />
+            Email: soporte@digitalstronglocking.cl
+            <br />
+            Teléfono: +56 9 3442 4489
+          </p>
+        </section>
+      </>
+    )
+  },
+  privacy: {
+    title: "Política de privacidad",
+    content: (
+      <>
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">1. Recopilación de información</h2>
+          <p>
+            Digital Strong Locking S.A. recopila la siguiente información durante la prestación de servicios de soporte técnico remoto:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Datos de contacto (nombre, correo electrónico, teléfono)</li>
+            <li>Información técnica del dispositivo</li>
+            <li>Registros de sesiones de soporte</li>
+            <li>Información de diagnóstico del sistema</li>
+          </ul>
+        </section>
+        
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">2. Uso de la información</h2>
+          <p>
+            Utilizamos la información recopilada para:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Proporcionar servicios de soporte técnico</li>
+            <li>Mejorar nuestros servicios</li>
+            <li>Comunicarnos con nuestros clientes</li>
+            <li>Resolver problemas técnicos</li>
+            <li>Generar estadísticas de servicio</li>
+          </ul>
+        </section>
+        
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">3. Protección de datos</h2>
+          <p>
+            Implementamos medidas de seguridad para proteger su información:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Encriptación de datos sensibles</li>
+            <li>Acceso restringido a información personal</li>
+            <li>Monitoreo de seguridad continuo</li>
+            <li>Actualizaciones regulares de sistemas de seguridad</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">4. Compartir información</h2>
+          <p>
+            No compartimos su información personal con terceros, excepto:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Cuando sea requerido por ley</li>
+            <li>Con su consentimiento explícito</li>
+            <li>Para proteger nuestros derechos legales</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">5. Derechos del usuario</h2>
+          <p>
+            Usted tiene derecho a:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Acceder a sus datos personales</li>
+            <li>Solicitar la rectificación de datos incorrectos</li>
+            <li>Solicitar la eliminación de sus datos</li>
+            <li>Oponerse al procesamiento de sus datos</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">6. Retención de datos</h2>
+          <p>
+            Mantenemos sus datos personales solo durante el tiempo necesario para:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Cumplir con nuestras obligaciones legales</li>
+            <li>Resolver disputas</li>
+            <li>Hacer cumplir nuestros acuerdos</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">7. Contacto</h2>
+          <p>
+            Para ejercer sus derechos o realizar consultas sobre privacidad, contáctenos en:
+            <br />
+            Email: soporte@digitalstronglocking.cl
+            <br />
+            Teléfono: +56 9 3442 4489
+          </p>
+        </section>
+      </>
+    )
+  },
+  cookies: {
+    title: "Política de cookies",
+    content: (
+      <>
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">1. ¿Qué son las cookies?</h2>
+          <p>
+            Las cookies son pequeños archivos de texto que se almacenan en su dispositivo cuando visita nuestro sitio web. 
+            Estas nos ayudan a brindar una mejor experiencia de usuario y entender cómo se utiliza nuestro sitio.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">2. Tipos de cookies que utilizamos</h2>
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-xl font-semibold mb-2">Cookies esenciales</h3>
+              <p>Necesarias para el funcionamiento básico del sitio web y la prestación de servicios de soporte técnico remoto.</p>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold mb-2">Cookies de rendimiento</h3>
+              <p>Nos ayudan a entender cómo los usuarios interactúan con nuestro sitio web, permitiéndonos mejorar su funcionamiento.</p>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold mb-2">Cookies de funcionalidad</h3>
+              <p>Permiten recordar sus preferencias y personalizar su experiencia en nuestro sitio.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">3. ¿Cómo utilizamos las cookies?</h2>
+          <p>Utilizamos cookies para:</p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Mantener su sesión activa durante el soporte técnico</li>
+            <li>Recordar sus preferencias de idioma y región</li>
+            <li>Analizar el tráfico y el comportamiento de los usuarios</li>
+            <li>Mejorar la seguridad de nuestros servicios</li>
+            <li>Personalizar el contenido según sus necesidades</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">4. Control de cookies</h2>
+          <p>
+            Usted puede controlar y/o eliminar las cookies según lo desee. Puede eliminar todas las cookies 
+            que ya están en su dispositivo y configurar la mayoría de los navegadores para que no las acepten. 
+            Sin embargo, si lo hace, es posible que deba ajustar manualmente algunas preferencias cada vez que 
+            visite nuestro sitio.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">5. Cookies de terceros</h2>
+          <p>
+            En algunos casos, utilizamos servicios de terceros que también pueden establecer cookies en su dispositivo. 
+            Estos servicios incluyen:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Herramientas de análisis web</li>
+            <li>Servicios de chat en vivo</li>
+            <li>Botones de redes sociales</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">6. Más información</h2>
+          <p>
+            Si tiene preguntas sobre nuestra política de cookies, contáctenos en:
+            <br />
+            Email: soporte@digitalstronglocking.cl
+            <br />
+            Teléfono: +56 9 3442 4489
+          </p>
+        </section>
+      </>
+    )
+  }
+}
+
+// Mapeo de los servicios del footer a los índices en serviciosDetallados
+const serviciosMap = {
+  "soporte-informatico": 0, // Soporte Informático General
+  "instalacion-config": 1,  // Instalación y Configuración
+  "eliminacion-virus": 2,   // Eliminación de Virus y Malware
+  "optimizacion-pc": 3,     // Optimización de Rendimiento
+  "soporte-windows": 5,     // Soporte para Windows
+  "asesoramiento": 4        // Asesoramiento Tecnológico
+}
 
 export default function Footer() {
+  const [servicioSeleccionado, setServicioSeleccionado] = useState<number | null>(null)
+    
+  const abrirModal = (index: number) => {
+    setServicioSeleccionado(index)
+  }
+  
+  const cerrarModal = () => {
+    setServicioSeleccionado(null)
+  }
+  
+  const servicioActual = servicioSeleccionado !== null ? serviciosDetallados[servicioSeleccionado] : null
+
   return (
     <footer className="bg-dark text-white py-12 md:py-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=100&width=100')] bg-repeat opacity-5"></div>
@@ -27,98 +316,15 @@ export default function Footer() {
             <p className="text-white/70 text-sm md:text-base">
               Soporte técnico remoto profesional para todo Chile. Rápido, eficiente y sin complicaciones.
             </p>
-            <div className="flex gap-3 md:gap-4">
-              {[
-                {
-                  icon: (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4 md:h-5 md:w-5"
-                    >
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-                    </svg>
-                  ),
-                  name: "Facebook",
-                },
-                {
-                  icon: (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4 md:h-5 md:w-5"
-                    >
-                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-                    </svg>
-                  ),
-                  name: "Instagram",
-                },
-                {
-                  icon: (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4 md:h-5 md:w-5"
-                    >
-                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-                    </svg>
-                  ),
-                  name: "Twitter",
-                },
-                {
-                  icon: (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-4 w-4 md:h-5 md:w-5"
-                    >
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                      <rect width="4" height="12" x="2" y="9" />
-                      <circle cx="4" cy="4" r="2" />
-                    </svg>
-                  ),
-                  name: "LinkedIn",
-                },
-              ].map((social, index) => (
-                <Link
-                  key={index}
-                  href="#"
-                  className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors duration-300 hover:scale-110 transform"
-                >
-                  {social.icon}
-                  <span className="sr-only">{social.name}</span>
-                </Link>
-              ))}
+            <div className="flex gap-3 md:gap-4 flex-col">
+              <a href="mailto:soporte@digitalstronglocking.cl" className="text-white/70 hover:text-white transition-colors duration-300 text-sm md:text-base flex items-center group">
+                <span className="w-0 h-0.5 bg-secondary group-hover:w-2 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+                soporte@digitalstronglocking.cl
+              </a>
+              <a href="tel:+56934424489" className="text-white/70 hover:text-white transition-colors duration-300 text-sm md:text-base flex items-center group">
+                <span className="w-0 h-0.5 bg-secondary group-hover:w-2 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+                +56 9 3442 4489
+              </a>
             </div>
           </div>
 
@@ -128,14 +334,21 @@ export default function Footer() {
               <span className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-primary"></span>
             </h3>
             <ul className="space-y-2 md:space-y-3">
-              {["Inicio", "Servicios", "Precios", "Blog", "FAQ", "Contacto"].map((item, index) => (
+              {[
+                { name: "Inicio", href: "/" },
+                { name: "Servicios", href: "/#servicios" },
+                { name: "Precios", href: "/#precios" },
+                { name: "Blog", href: "/blog" },
+                { name: "FAQ", href: "/#faq" },
+                { name: "Contacto", href: "/#contacto" }
+              ].map((item, index) => (
                 <li key={index}>
                   <Link
-                    href={`#${item.toLowerCase()}`}
+                    href={item.href}
                     className="text-white/70 hover:text-white transition-colors duration-300 text-sm md:text-base flex items-center group"
                   >
                     <span className="w-0 h-0.5 bg-primary group-hover:w-2 mr-0 group-hover:mr-2 transition-all duration-300"></span>
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}
@@ -149,20 +362,21 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 md:space-y-3">
               {[
-                "Soporte Informático",
-                "Eliminación de Virus",
-                "Optimización de PC",
-                "Soporte para Windows",
-                "Asesoramiento Tecnológico",
+                { name: "Soporte Informático", serviceId: "soporte-informatico" },
+                { name: "Instalación y Configuración", serviceId: "instalacion-config" },
+                { name: "Eliminación de Virus", serviceId: "eliminacion-virus" },
+                { name: "Optimización de PC", serviceId: "optimizacion-pc" },
+                { name: "Soporte para Windows", serviceId: "soporte-windows" },
+                { name: "Asesoramiento Tecnológico", serviceId: "asesoramiento" }
               ].map((item, index) => (
                 <li key={index}>
-                  <Link
-                    href="#"
-                    className="text-white/70 hover:text-white transition-colors duration-300 text-sm md:text-base flex items-center group"
+                  <button
+                    onClick={() => abrirModal(serviciosMap[item.serviceId as keyof typeof serviciosMap])}
+                    className="text-white/70 hover:text-white transition-colors duration-300 text-sm md:text-base flex items-center group text-left w-full"
                   >
                     <span className="w-0 h-0.5 bg-secondary group-hover:w-2 mr-0 group-hover:mr-2 transition-all duration-300"></span>
-                    {item}
-                  </Link>
+                    {item.name}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -174,15 +388,28 @@ export default function Footer() {
               <span className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-white/50"></span>
             </h3>
             <ul className="space-y-2 md:space-y-3">
-              {["Términos y Condiciones", "Política de Privacidad", "Política de Cookies"].map((item, index) => (
+              {[
+                { name: "Términos y condiciones", type: "terms" },
+                { name: "Política de privacidad", type: "privacy" },
+                { name: "Política de cookies", type: "cookies" }
+              ].map((item, index) => (
                 <li key={index}>
-                  <Link
-                    href="#"
-                    className="text-white/70 hover:text-white transition-colors duration-300 text-sm md:text-base flex items-center group"
-                  >
-                    <span className="w-0 h-0.5 bg-white/50 group-hover:w-2 mr-0 group-hover:mr-2 transition-all duration-300"></span>
-                    {item}
-                  </Link>
+                  <Dialog>
+                    <DialogTrigger className="text-white/70 hover:text-white transition-colors duration-300 text-sm md:text-base flex items-center group w-full text-left">
+                      <span className="w-0 h-0.5 bg-white/50 group-hover:w-2 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+                      {item.name}
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>
+                          {legalContent[item.type as keyof typeof legalContent].title}
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div className="policy-content text-gray-700">
+                        {legalContent[item.type as keyof typeof legalContent].content}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </li>
               ))}
             </ul>
@@ -193,6 +420,50 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} Digital Strong Locking S.A. Todos los derechos reservados.</p>
         </div>
       </div>
+
+      {/* Modal con información de servicios detallados */}
+      <Dialog open={servicioSeleccionado !== null} onOpenChange={cerrarModal}>
+        {servicioActual && (
+          <DialogContent className="max-w-3xl overflow-auto">
+            <DialogHeader>
+              <div className="flex items-center gap-3 mb-1">
+                <div className="rounded-lg w-10 h-10 flex items-center justify-center bg-gradient-to-br from-primary to-secondary">
+                  {servicioActual.icon}
+                </div>
+                <DialogTitle>{servicioActual.title}</DialogTitle>
+              </div>
+            </DialogHeader>
+            
+            <div className="mb-4">
+              <p className="text-dark/80 text-lg leading-relaxed mb-6">
+                {servicioActual.resumen}
+              </p>
+              
+              <h4 className="text-base font-semibold text-primary mb-3">Lo que incluye este servicio:</h4>
+              <ul className="space-y-2 mb-6">
+                {servicioActual.detalles.map((detalle, idx) => (
+                  <li key={idx} className="flex items-start">
+                    <span className="text-primary mr-2 mt-1">•</span>
+                    <span className="text-dark/70">{detalle}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <DialogFooter className="flex justify-center sm:justify-end">
+              <Button
+                className="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white"
+                onClick={() => {
+                  window.open('https://www.remotedesktop.com/hd-app/help', '_blank', 'noopener,noreferrer')
+                  cerrarModal()
+                }}
+              >
+                Obtén Soporte Remoto Ahora
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        )}
+      </Dialog>
     </footer>
   )
 } 

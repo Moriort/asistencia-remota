@@ -27,7 +27,7 @@ export default function HeroSection() {
                 <span className="relative z-10 text-primary">Remoto</span>
                 <span className="absolute -bottom-2 left-0 w-full h-3 bg-secondary/30 -rotate-1"></span>
               </span>{" "}
-              en Todo Chile
+              en todo Chile
             </h1>
             <p className="text-lg md:text-xl text-dark/80 max-w-xl">
               Resolvemos tus problemas informáticos sin salir de casa. Rápido, eficiente y profesional.
@@ -36,15 +36,26 @@ export default function HeroSection() {
               <Button
                 size="lg"
                 className="gap-2 bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white rounded-full group relative overflow-hidden"
+                onClick={() => window.open('https://www.remotedesktop.com/hd-app/help', '_blank', 'noopener,noreferrer')}
               >
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary to-secondary group-hover:scale-105 transition-transform duration-300"></span>
                 <span className="relative flex items-center gap-2">
-                  Obtén Soporte Remoto Ahora
+                  Obtener Soporte Remoto
                   <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Button>
-              <Button size="lg" variant="outline" className="border-dark/20 text-dark hover:bg-dark/5 rounded-full">
-                Ver Servicios
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-dark/20 text-dark hover:bg-dark/5 rounded-full"
+                onClick={() => {
+                  const serviciosSection = document.getElementById('servicios');
+                  if (serviciosSection) {
+                    serviciosSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                Ver servicios
               </Button>
             </div>
             <div className="flex items-center gap-4 text-dark/80 pt-2 md:pt-4">

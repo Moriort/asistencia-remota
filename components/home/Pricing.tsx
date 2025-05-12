@@ -4,6 +4,14 @@ import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 
 export default function Pricing() {
+    // Función para hacer scroll hacia la sección de contacto
+    const scrollToContact = () => {
+        const contactSection = document.getElementById('contacto');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return(
         <section id="precios" className="py-16 md:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>
@@ -102,6 +110,7 @@ export default function Pricing() {
                 <Button
                   className={`w-full ${plan.variant === "outline" ? "variant-outline " + plan.buttonColor : plan.buttonColor + " text-white"} rounded-lg`}
                   variant={plan.variant || "default"}
+                  onClick={scrollToContact}
                 >
                   {plan.buttonText}
                 </Button>

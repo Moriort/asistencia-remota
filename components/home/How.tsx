@@ -23,7 +23,7 @@ export default function HeroSection() {
               </span>
               <div className="absolute -bottom-1 -right-1 w-full h-full border border-primary/30 rounded-md"></div>
             </div>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-shadow-lg text-red-50">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-shadow-lg text-black">
               ¿Cómo funciona nuestro servicio?
             </h2>
             <p className="mt-3 md:mt-4 text-base md:text-lg lg:text-xl text-dark/70 max-w-3xl mx-auto">

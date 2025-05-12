@@ -2,7 +2,6 @@
 
 import { Button } from "../ui/button"
 import Link from "next/link"
-import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react"
 import { useState } from 'react'
 
 export default function Contact() {
@@ -122,8 +121,8 @@ export default function Contact() {
                                     title: "Horario",
                                     content: (
                                         <>
-                                            <p className="text-gray-600">Lunes a Viernes: 9:00 - 19:00</p>
-                                            <p className="text-gray-600">Sábado: 10:00 - 14:00</p>
+                                            <p className="text-gray-600">Lunes a Domingo : 8:00 AM - 20:00 PM</p>
+                                            <p className="text-gray-600">Trabajamos feriados y días festivos</p>
                                         </>
                                     ),
                                 },
@@ -156,43 +155,6 @@ export default function Contact() {
                                     </div>
                                 </div>
                             ))}
-                        </div>
-
-                        <div className="mt-8 pt-8 border-t border-gray-100">
-                            <h3 className="font-semibold text-gray-900 mb-4">Síguenos en redes sociales</h3>
-                            <div className="flex space-x-4">
-                                {[
-                                    {
-                                        icon: <Facebook className="h-5 w-5" />,
-                                        name: "Facebook",
-                                        href: "#"
-                                    },
-                                    {
-                                        icon: <Instagram className="h-5 w-5" />,
-                                        name: "Instagram",
-                                        href: "#"
-                                    },
-                                    {
-                                        icon: <Twitter className="h-5 w-5" />,
-                                        name: "Twitter",
-                                        href: "#"
-                                    },
-                                    {
-                                        icon: <Linkedin className="h-5 w-5" />,
-                                        name: "LinkedIn",
-                                        href: "#"
-                                    }
-                                ].map((social, index) => (
-                                    <Link
-                                        key={index}
-                                        href={social.href}
-                                        className="p-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200 text-gray-600 hover:text-gray-900"
-                                    >
-                                        {social.icon}
-                                        <span className="sr-only">{social.name}</span>
-                                    </Link>
-                                ))}
-                            </div>
                         </div>
                     </div>
 

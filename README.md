@@ -98,5 +98,5 @@ Este proyecto es propiedad de Digital Strong Locking S.A. Todos los derechos res
 ## Contacto
 
 - **Email**: soporte@digitalstronglocking.com
-- **Teléfono**: +56 9 3442 4489
+- **Teléfono**: +56 9 79528968
 - **Sitio web**: [Digital Strong Locking](https://www.digitalstronglocking.com) 
